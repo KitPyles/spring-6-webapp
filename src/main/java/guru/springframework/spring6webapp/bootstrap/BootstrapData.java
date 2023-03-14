@@ -26,29 +26,28 @@ public class BootstrapData implements CommandLineRunner {
         eric.setFirstName("Eric");
         eric.setLastName("Evans");
         Author rod = new Author("Rod", "Johnson");
+        Author ericSaved = authorRepository.save(eric);
+        Author rodSaved = authorRepository.save(rod);
 
         Book ddd = new Book();
         ddd.setTitle("Domain Driven Design: Tackling Complexity in the Heart of Software");
         ddd.setIsbn("0321125215");
         Book noEJB = new Book("J2EE Development without EJB", "978-0-764-57390-3");
+        Book dddSaved = bookRepository.save(ddd);
+        Book noEJBSaved = bookRepository.save(noEJB);
 
         Publisher addison = new Publisher("Addison-Wesley Professional","501 Boylston St, Ste 900", "Boston", "MA", "02116-3725");
         Publisher wiley = new Publisher("John Wiley & Sons", "1 Wiley Dr", "Somerset", "NJ", "08873");
-
         Publisher addisonSaved = publisherRepository.save(addison);
         Publisher wileySaved = publisherRepository.save(wiley);
 
         ddd.setPublisher(addisonSaved);
         noEJB.setPublisher(wileySaved);
 
-        Author ericSaved = authorRepository.save(eric);
-        Author rodSaved = authorRepository.save(rod);
-
-        Book dddSaved = bookRepository.save(ddd);
-        Book noEJBSaved = bookRepository.save(noEJB);
-
         ericSaved.getBooks().add(dddSaved);
         rodSaved.getBooks().add(noEJBSaved);
+        dddSaved.getAuthors().add(ericSaved);
+        noEJBSaved.getAuthors().add(rodSaved);
 
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
