@@ -25,18 +25,26 @@ public class BootstrapData implements CommandLineRunner {
         Author eric = new Author();
         eric.setFirstName("Eric");
         eric.setLastName("Evans");
+        Author rod = new Author("Rod", "Johnson");
 
         Book ddd = new Book();
         ddd.setTitle("Domain Driven Design: Tackling Complexity in the Heart of Software");
         ddd.setIsbn("0321125215");
-
-        Author ericSaved = authorRepository.save(eric);
-        Book dddSaved = bookRepository.save(ddd);
-
-        Author rod = new Author("Rod", "Johnson");
         Book noEJB = new Book("J2EE Development without EJB", "978-0-764-57390-3");
 
+        Publisher addison = new Publisher("Addison-Wesley Professional","501 Boylston St, Ste 900", "Boston", "MA", "02116-3725");
+        Publisher wiley = new Publisher("John Wiley & Sons", "1 Wiley Dr", "Somerset", "NJ", "08873");
+
+        Publisher addisonSaved = publisherRepository.save(addison);
+        Publisher wileySaved = publisherRepository.save(wiley);
+
+        ddd.setPublisher(addisonSaved);
+        noEJB.setPublisher(wileySaved);
+
+        Author ericSaved = authorRepository.save(eric);
         Author rodSaved = authorRepository.save(rod);
+
+        Book dddSaved = bookRepository.save(ddd);
         Book noEJBSaved = bookRepository.save(noEJB);
 
         ericSaved.getBooks().add(dddSaved);
@@ -44,12 +52,8 @@ public class BootstrapData implements CommandLineRunner {
 
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
-
-        Publisher addison = new Publisher("Addison-Wesley Professional","501 Boylston St, Ste 900", "Boston", "MA", "02116-3725");
-        Publisher wiley = new Publisher("John Wiley & Sons", "1 Wiley Dr", "Somerset", "NJ", "08873");
-
-        publisherRepository.save(addison);
-        publisherRepository.save(wiley);
+        bookRepository.save(dddSaved);
+        bookRepository.save(noEJBSaved);
 
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
