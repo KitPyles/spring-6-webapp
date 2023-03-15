@@ -4,8 +4,6 @@ package guru.springframework.spring6webapp.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Objects;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -49,13 +47,15 @@ public class Publisher {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Publisher)) return false;
+
         Publisher publisher = (Publisher) o;
-        return id.equals(publisher.id);
+
+        return id != null ? id.equals(publisher.id) : publisher.id == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return id != null ? id.hashCode() : 0;
     }
 }

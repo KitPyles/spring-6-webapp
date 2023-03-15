@@ -4,9 +4,7 @@ package guru.springframework.spring6webapp.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -38,13 +36,15 @@ public class Author {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Author)) return false;
+
         Author author = (Author) o;
-        return id.equals(author.id);
+
+        return getId() != null ? getId().equals(author.getId()) : author.getId() == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return getId() != null ? getId().hashCode() : 0;
     }
 }
